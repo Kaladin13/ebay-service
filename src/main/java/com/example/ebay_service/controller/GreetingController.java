@@ -1,4 +1,4 @@
-package com.example.ebay_service.service;
+package com.example.ebay_service.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

@@ -1,5 +1,6 @@
 package com.example.ebay_service.service;
 
+import com.example.ebay_service.controller.GreetingController;
 import com.netflix.discovery.EurekaClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -11,14 +12,10 @@ public class GreetingEbayService implements GreetingController {
     @Lazy
     private final EurekaClient eurekaClient;
 
-    final
-    Environment environment;
+    private final Environment environment;
 
     @Value("${spring.application.name}")
     private String appName;
-
-    @Value("${server.port}")
-    private Integer appPort;
 
     public GreetingEbayService(EurekaClient eurekaClient, Environment environment) {
         this.eurekaClient = eurekaClient;

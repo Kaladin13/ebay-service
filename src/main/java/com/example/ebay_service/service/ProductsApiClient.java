@@ -1,5 +1,8 @@
 package com.example.ebay_service.service;
 
+import com.example.ebay_service.model.PageProduct;
+import com.example.ebay_service.model.Product;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -8,11 +11,12 @@ import java.util.List;
 @Service
 public class ProductsApiClient {
 
+    private final Environment environment;
     private static final String URL = "https://localhost:8023/products-1.0-SNAPSHOT/api";
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    public ProductsApiClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public ProductsApiClient(Environment environment) {
+        this.environment = environment;
     }
 
     public void updatePrice(float percent) {

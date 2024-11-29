@@ -1,5 +1,6 @@
-package com.example.ebay_service.service;
+package com.example.ebay_service.controller;
 
+import com.example.ebay_service.service.ProductsApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
