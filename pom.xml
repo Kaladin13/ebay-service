@@ -12,7 +12,6 @@
 	<artifactId>ebay-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ebay-service</name>
-	<packaging>war</packaging>
 	<description>ebay-service spring cloud</description>
 	<url/>
 	<licenses>
