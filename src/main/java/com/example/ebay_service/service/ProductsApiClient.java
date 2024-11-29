@@ -3,6 +3,7 @@ package com.example.ebay_service.service;
 import com.example.ebay_service.model.PageProduct;
 import com.example.ebay_service.model.Product;
 import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,7 +13,10 @@ import java.util.List;
 public class ProductsApiClient {
 
     private final Environment environment;
-    private static final String URL = "https://localhost:8023/products-1.0-SNAPSHOT/api";
+
+    @Value("${prop.ebay.url}")
+    private String URL;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     public ProductsApiClient(Environment environment) {
