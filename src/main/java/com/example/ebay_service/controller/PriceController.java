@@ -1,34 +1,68 @@
 package com.example.ebay_service.controller;
 
+import com.example.ebay_service.exception.SoapErrorDto;
+import com.example.ebay_service.exception.ValidationException;
+import com.example.ebay_service.model.DecreasePriceRequest;
+import com.example.ebay_service.model.IncreasePriceRequest;
+import com.example.ebay_service.model.PriceResponse;
 import com.example.ebay_service.service.ProductsApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-
-@RestController
-@RequestMapping("/price")
-@Validated
+@Endpoint
 public class PriceController {
+
+    private static final String NAMESPACE_URI = "http://example.com/price";
 
     @Autowired
     private ProductsApiClient productsApiClient;
 
-    @PostMapping("/increase/{increasePercent}")
-    public ResponseEntity<Void> increasePrice(@PathVariable("increasePercent") @Valid @Min(0) float percent) {
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "IncreasePriceRequest")
+    @ResponsePayload
+    public PriceResponse increasePrice(@RequestPayload IncreasePriceRequest request) {
+        Float percent = request.getPricePercent();
+        if (percent == null) {
+            throw new ValidationException(
+                    "Percent cannot be null",
+                    new SoapErrorDto("400", "Percent cannot be null")
+            );
+        }
+        if (percent >= 1 || percent <= 0) {
+            throw new ValidationException(
+                    "Increase percentage must be less than 1 and more than 0",
+                    new SoapErrorDto("400", "Increase percentage must be less than 1 and more than 0")
+            );
+        }
         productsApiClient.updatePrice(1 + percent);
-        return ResponseEntity.ok().build();
+
+        return new PriceResponse("OK");
     }
 
-    @PostMapping("/decrease/{decreasePercent}")
-    public ResponseEntity<Void> decreasePrice(@PathVariable("decreasePercent") @Valid @Min(0) float percent) {
-        if (percent >= 1) {
-            return ResponseEntity.badRequest().build();
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DecreasePriceRequest")
+    @ResponsePayload
+    public PriceResponse decreasePrice(@RequestPayload DecreasePriceRequest request) {
+        Float percent = request.getPricePercent();
+
+        if (percent == null) {
+            throw new ValidationException(
+                    "Percent cannot be null",
+                    new SoapErrorDto("400", "Percent cannot be null")
+            );
         }
+
+        if (percent >= 1 || percent <= 0) {
+            throw new ValidationException(
+                    "Decrease percentage must be less than 1 and more than 0",
+                    new SoapErrorDto("400", "Decrease percentage must be less than 1 and more than 0")
+            );
+        }
+
         productsApiClient.updatePrice(1 - percent);
-        return ResponseEntity.ok().build();
+
+        return new PriceResponse("OK");
     }
 }
