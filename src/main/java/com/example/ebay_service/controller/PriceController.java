@@ -15,7 +15,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class PriceController {
 
-    private static final String NAMESPACE_URI = "http://example.com/price";
+    private static final String NAMESPACE_URI = "http://188.225.56.32:8080/ebay-service/ws";
 
     @Autowired
     private ProductsApiClient productsApiClient;

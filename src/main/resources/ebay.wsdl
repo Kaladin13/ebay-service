@@ -1,7 +1,7 @@
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:tns="http://example.com/price"
+             xmlns:tns="http://188.225.56.32:8080/ebay-service/ws"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             targetNamespace="http://example.com/price">
+             targetNamespace="http://188.225.56.32:8080/ebay-service/ws">
     <message name="PriceRequest">
         <part name="pricePercent" type="xsd:float"/>
     </message>
@@ -23,7 +23,7 @@
     <binding name="PriceBinding" type="tns:PricePortType">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="pricePercent">
-            <soap:operation soapAction="http://example.com/price/increasePrice"/>
+            <soap:operation soapAction="http://188.225.56.32:8080/ebay-service/ws/increasePrice"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -32,7 +32,7 @@
             </output>
         </operation>
         <operation name="decreasePrice">
-            <soap:operation soapAction="http://example.com/price/decreasePrice"/>
+            <soap:operation soapAction="http://188.225.56.32:8080/ebay-service/ws/decreasePrice"/>
             <input>
                 <soap:body use="literal"/>
             </input>
